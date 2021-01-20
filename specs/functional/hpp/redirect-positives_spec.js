@@ -3,7 +3,7 @@ define(function (require) {
   var assert = require('intern/chai!assert');
   var successHelper = require('intern/dojo/node!../../helpers/hpp').redirectSuccessHelper;
 
-  bdd.describe('RealexRemote - HPP Redirect Positive Tests', function () {
+  bdd.describe('AddonPayments - HPP Redirect Positive Tests', function () {
     bdd.it('should process a payment successfully',
       successHelper(
         // url

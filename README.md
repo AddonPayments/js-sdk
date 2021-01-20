@@ -15,9 +15,49 @@ Este código solo debe ejecutarse cuando el DOM está completamente cargado.
 ```javascript
 RealexHpp.init(payButtonId, merchantUrl, jsonFromServerSdk);
 ```
-* payButtonId: ID del botón utilizado para iniciar el Lightbox.
-* merchantUrl: URL en la que se publicará la respuesta JSON de Addon Payments.
-* jsonFromServerSdk: Respuesta JSON del servidor de Addon Payments.
+
+- payButtonId: ID del botón utilizado para iniciar el Lightbox.
+- merchantUrl: URL en la que se publicará la respuesta JSON de Addon Payments.
+- jsonFromServerSdk: Respuesta JSON del servidor de Addon Payments.
+
+En la documentación de cada SDK [(PHP, JAVA, .NET)](https://github.com/addonpayments), podrá comprobar que usamos el siguiente código:
+
+```javascript
+$(document).ready(function () {
+  $.getJSON("request.php", function (jsonFromRequestEndpoint) {
+    RealexHpp.setHppUrl("https://hpp.sandbox.addonpayments.com/pay");
+    RealexHpp.lightbox.init(
+      "payButtonId",
+      "https://midominio.es/response.php",
+      jsonFromRequestEndpoint
+    );
+  });
+});
+```
+
+### Debug
+
+Para utilizar la función de Debug y ver los errores por consola, debe indicar el siguiente parámetro en sus peticiones mediante HPP.
+
+```javascript
+RealexHpp.setDebugErrors(true);
+```
+
+Quedando el código de la siguiente forma:
+
+```javascript
+$(document).ready(function () {
+  $.getJSON("request.php", function (jsonFromRequestEndpoint) {
+    RealexHpp.setHppUrl("https://hpp.sandbox.addonpayments.com/pay");
+    RealexHpp.setDebugErrors(true);
+    RealexHpp.lightbox.init(
+      "payButtonId",
+      "https://midominio.es/response.php",
+      jsonFromRequestEndpoint
+    );
+  });
+});
+```
 
 ### Consumiendo la petición POST
 
@@ -27,12 +67,12 @@ Una vez que se haya completado el pago, la respuesta de JSON se publicará en la
 
 ### Funciones de validación
 
-* validateCardNumber: valida el formato del número de tarjeta y realiza una verificación Luhn
-* validateCardHolderName: valida que el nombre del titular de la tarjeta está compuesto por caracteres ISO / IEC 8859-1: 1998
-* validateCvn: ​​valida CVN no Amex
-* validateAmexCvn: ​​valida Amex CVN
-* validateExpiryDateFormat: valida el formato de fecha de vencimiento
-* validateExpiryDateNotInPast: valida que la fecha de caducidad no está pasada
+- validateCardNumber: valida el formato del número de tarjeta y realiza una verificación Luhn
+- validateCardHolderName: valida que el nombre del titular de la tarjeta está compuesto por caracteres ISO / IEC 8859-1: 1998
+- validateCvn: ​​valida CVN no Amex
+- validateAmexCvn: ​​valida Amex CVN
+- validateExpiryDateFormat: valida el formato de fecha de vencimiento
+- validateExpiryDateNotInPast: valida que la fecha de caducidad no está pasada
 
 ### Uso
 
@@ -47,15 +87,15 @@ RealexRemote.validateExpiryDateNotInPast(expiryDate);
 
 #### Datos de tarjeta de prueba
 
-Nombre      | Número           | Exp Mes   | Exp Año  | CVN
------------ | ---------------- | --------- | -------- | ----
-Visa        | 4263970000005262 | 12        | 2025     | 123
-MasterCard  | 2223000010005780 | 12        | 2019     | 900
-MasterCard  | 5425230000004415 | 12        | 2025     | 123
-Discover    | 6011000000000087 | 12        | 2025     | 123
-Amex        | 374101000000608  | 12        | 2025     | 1234
-JCB         | 3566000000000000 | 12        | 2025     | 123
-Diners Club | 36256000000725   | 12        | 2025     | 123
+| Nombre      | Número           | Exp Mes | Exp Año | CVN  |
+| ----------- | ---------------- | ------- | ------- | ---- |
+| Visa        | 4263970000005262 | 12      | 2025    | 123  |
+| MasterCard  | 2223000010005780 | 12      | 2019    | 900  |
+| MasterCard  | 5425230000004415 | 12      | 2025    | 123  |
+| Discover    | 6011000000000087 | 12      | 2025    | 123  |
+| Amex        | 374101000000608  | 12      | 2025    | 1234 |
+| JCB         | 3566000000000000 | 12      | 2025    | 123  |
+| Diners Club | 36256000000725   | 12      | 2025    | 123  |
 
 ## Soporte
 
