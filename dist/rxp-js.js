@@ -1,4 +1,4 @@
-/*! js-sdk - v2.1.0 - 2020-01-20
+/*! js-sdk - v2.1.0 - 2020-02-26
  * The official Addon Payments JS Library
  * https://github.com/AddonPayments/js-sdk
  * Licensed MIT
@@ -309,8 +309,16 @@ var RealexHpp = (function () {
 					return;
 				}
 
+				// check if event.data have JSON values
+				let result;
+				try {
+					result = JSON.parse(event.data);
+				} catch {
+					result = null;
+				}
+
 				// check for iframe resize values
-				if (event.data && JSON.parse(event.data).iframe) {
+				if (result && result.iframe) {
 					if (!isMobileNewTab) {
 						var iframeWidth = JSON.parse(event.data).iframe.width;
 						var iframeHeight = JSON.parse(event.data).iframe.height;
@@ -461,14 +469,12 @@ var RealexHpp = (function () {
 			},
 			init: function (idOfLightboxButton, merchantUrl, serverSdkJson) {
 				if (
-					(serverSdkJson["MERCHANT_ID"] && serverSdkJson["HPP_VERSION"] && serverSdkJson["ORDER_ID"] && serverSdkJson["SHA1HASH"] && serverSdkJson["TIMESTAMP"]) === undefined
+					(serverSdkJson["MERCHANT_ID"] && serverSdkJson["HPP_VERSION"] && serverSdkJson["ORDER_ID"] && serverSdkJson["SHA1HASH"] && serverSdkJson["TIESTAMP"]) === undefined
 				) {
 					if (errors.indexOf('undefined-json-response-iframe') === -1) {
 						errors.push('undefined-json-response-iframe: Check that you are sending the mandatory parameters https://desarrolladores.addonpayments.com/#!/hpp/transaction-processing');
 					}
-					debugErrors(errors);
-					console.error('Response of server :>> ');
-					console.table(serverSdkJson);
+					debugErrors(errors);	
 				}
 
 				//Get the lightbox instance (it's a singleton) and set the sdk json
